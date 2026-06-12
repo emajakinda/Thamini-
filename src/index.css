@@ -58,3 +58,32 @@ body {
 .loading-dot {
   animation: pulse-dot 1.2s ease-in-out infinite;
 }
+
+/* Scrolling market ticker */
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker-scroll 60s linear infinite;
+  will-change: transform;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Reduced motion: no marquee, allow manual horizontal scrolling instead */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none !important;
+  }
+  .ticker-viewport {
+    overflow-x: auto !important;
+  }
+}

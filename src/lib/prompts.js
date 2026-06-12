@@ -117,3 +117,26 @@ export function macroCoreUserMessage(watchlist) {
       : "empty";
   return `Retrieve the current Kenya macro dashboard. Today's date is ${today}. Analyst watchlist for the exposure mapping: ${list}. Search the web for the latest CBK policy rate, CPI, T-bill auction results, latest T-bond auction, KES/USD, and yield curve shape before answering. Respond with only the JSON object.`;
 }
+
+export const TICKER_SYSTEM_PROMPT = `You are a market data assistant for the Nairobi Securities Exchange. Always search the web before answering. Never use training data for prices. The NSE trades weekdays 09:30 to 15:00 East Africa Time; outside trading hours report the most recent close and date it accordingly.
+
+Respond with a single valid JSON object and nothing else. No markdown fences, no commentary. Schema:
+
+{
+  "asOf": "<date and time the quotes refer to, e.g. close of 2026-06-12>",
+  "source": "<primary source name>",
+  "items": [
+    { "symbol": "<ticker, e.g. SCOM>", "name": "<short name>", "price": "<quote, e.g. KES 28.50 or 104.2 for an index>", "changePct": "<signed day change, e.g. +1.25% or -0.40% or 0.00%>", "direction": "<up, down, or flat>" }
+  ]
+}
+
+Include items in this order: the NASI all share index, the NSE 20 index, the NSE 25 index, then every company listed in the user message, then a few of the session's most actively traded NSE counters not already included. 12 to 18 items total. If a quote cannot be found after searching, set price to "n/a", changePct to "", and direction to "flat". Do not use em dashes or emojis.`;
+
+export function tickerUserMessage(watchlist) {
+  const today = new Date().toISOString().slice(0, 10);
+  const list =
+    watchlist && watchlist.length
+      ? watchlist.map((c) => `${c.name}${c.ticker ? ` (${c.ticker})` : ""}`).join("; ")
+      : "none";
+  return `Retrieve the latest available NSE Kenya quotes. Today's date is ${today}. Watchlist companies to include: ${list}. Respond with only the JSON object.`;
+}

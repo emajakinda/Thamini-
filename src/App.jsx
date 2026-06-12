@@ -3,6 +3,7 @@ import CompanyTab from "./tabs/CompanyTab.jsx";
 import SectorTab from "./tabs/SectorTab.jsx";
 import MacroTab from "./tabs/MacroTab.jsx";
 import AlertBanner from "./components/AlertBanner.jsx";
+import TickerTape from "./components/TickerTape.jsx";
 import { Toast, inputClass, Button } from "./components/ui.jsx";
 import { storageGet, storageSet, isPersistent, KEYS } from "./lib/storage.js";
 import { daysSince } from "./lib/parse.js";
@@ -216,6 +217,8 @@ export default function App() {
           </div>
         )}
       </header>
+
+      <TickerTape apiKey={apiKey} watchlist={watchlist} />
 
       <nav className="border-b border-edge bg-panel sticky top-0 z-40">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row">
