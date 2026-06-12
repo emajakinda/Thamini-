@@ -4,7 +4,7 @@ NSE market intelligence and independent valuation research tool. Built for an eq
 
 ## What it does
 
-Three tabs, all grounded in live web search on every query (model: `claude-opus-4-8` with the `web_search_20250305` tool):
+Three tabs, all grounded in live web search on every query (model: `claude-sonnet-4-6` with the `web_search_20250305` tool, chosen for cost efficiency):
 
 - **Company**: search any NSE-listed name or ticker, pick a valuation methodology (DCF, DDM, EV/EBITDA, P/E Relative, P/B Relative, Sum-of-Parts), and get news mapped to model assumptions, an assumption dashboard, exactly four open questions (with a persisted answer checklist), price context, and a 91-day T-bill discount rate flag. Persistent watchlist, thesis notes, and read-only session history per company.
 - **Sector**: Banking, Telco, and Energy pinned by default. Pinned sectors track last-queried timestamps and go stale after 7 days. On-demand sector queries render in a temporary panel. Per-sector notes and history.
