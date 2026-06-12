@@ -33,11 +33,18 @@ async function postMessage({ system, messages, maxTokens, apiKey, maxWebSearches
     ],
   };
 
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-  });
+  let res;
+  try {
+    res = await fetch(API_URL, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    });
+  } catch {
+    throw new Error(
+      "Could not reach the Anthropic API. Check your internet connection and that your API key in Settings is correct (no extra spaces)."
+    );
+  }
 
   let data = null;
   try {
@@ -67,11 +74,18 @@ function textOf(content) {
  * server-side web search loop and accumulates text across continuations.
  */
 export async function runResearchQuery({ system, userMessage, maxTokens = 6000, apiKey, maxWebSearches = 8 }) {
+  const key = (apiKey || "").trim();
+  const inArtifactEnvironment = typeof window !== "undefined" && Boolean(window.claude);
+  if (!key && !inArtifactEnvironment) {
+    throw new Error(
+      "No API key set. Click Settings in the top-right corner and paste your Anthropic API key (create one at console.anthropic.com)."
+    );
+  }
   const messages = [{ role: "user", content: userMessage }];
   let accumulated = "";
 
   for (let attempt = 0; attempt < 4; attempt++) {
-    const data = await postMessage({ system, messages, maxTokens, apiKey, maxWebSearches });
+    const data = await postMessage({ system, messages, maxTokens, apiKey: key, maxWebSearches });
 
     if (data.stop_reason === "refusal") {
       throw new Error("The model declined this request.");

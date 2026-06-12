@@ -119,8 +119,9 @@ export default function App() {
   };
 
   const saveApiKey = async (value) => {
-    setApiKey(value);
-    await storageSet(KEYS.apiKey, value);
+    const cleaned = value.trim();
+    setApiKey(cleaned);
+    await storageSet(KEYS.apiKey, cleaned);
   };
 
   const discountAlertActive = Boolean(macroSnapshot?.data?.discountRateAlert);
