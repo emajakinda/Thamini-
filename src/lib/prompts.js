@@ -126,7 +126,7 @@ Respond with a single valid JSON object and nothing else. No markdown fences, no
   "asOf": "<date and time the quotes refer to, e.g. close of 2026-06-12>",
   "source": "<primary source name>",
   "items": [
-    { "symbol": "<ticker, e.g. SCOM>", "name": "<short name>", "price": "<quote, e.g. KES 28.50 or 104.2 for an index>", "changePct": "<signed day change, e.g. +1.25% or -0.40% or 0.00%>", "direction": "<up, down, or flat>" }
+    { "symbol": "<ticker, e.g. SCOM>", "name": "<short company or index name, e.g. Safaricom or NSE 20>", "price": "<bare number as a string, e.g. 28.50 or 3104.2, no currency prefix>", "changePct": "<signed day change, e.g. +1.25% or -0.40% or 0.00%>", "direction": "<up, down, or flat>" }
   ]
 }
 

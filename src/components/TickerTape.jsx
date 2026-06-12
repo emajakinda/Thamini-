@@ -9,17 +9,17 @@ const REFRESH_THRESHOLD_MS = 30 * 60 * 1000;
 function TickerItem({ item }) {
   const dir = (item.direction || "flat").toLowerCase();
   const color = dir === "up" ? "text-green" : dir === "down" ? "text-red" : "text-dim";
-  const arrow = dir === "up" ? "+" : dir === "down" ? "-" : "=";
+  const arrow = dir === "up" ? "▲" : dir === "down" ? "▼" : "";
+  const price = String(item.price || "").replace(/^KES\s*/i, "");
   return (
-    <span className="inline-flex items-baseline gap-1.5 px-4 whitespace-nowrap font-mono text-[12px]">
-      <span className="text-amber font-semibold">{item.symbol}</span>
-      <span className="text-fg/90">{item.price}</span>
-      {item.changePct ? (
-        <span className={color}>
-          [{arrow}] {item.changePct}
-        </span>
-      ) : null}
-      <span className="text-edge select-none">|</span>
+    <span className={`inline-flex items-baseline gap-2 px-8 whitespace-nowrap font-mono text-[13px] ${color}`}>
+      <span className="font-semibold">
+        {item.symbol}
+        {item.name ? ` (${item.name})` : ""}
+      </span>
+      <span>{price}</span>
+      {arrow && <span className="text-[11px]">{arrow}</span>}
+      {item.changePct ? <span>{item.changePct}</span> : null}
     </span>
   );
 }
@@ -84,7 +84,7 @@ export default function TickerTape({ apiKey, watchlist }) {
   return (
     <div className="border-b border-edge bg-panel2">
       <div className="flex items-center">
-        <div className="shrink-0 px-3 py-1.5 border-r border-edge flex items-center gap-2">
+        <div className="shrink-0 px-3 py-2 border-r border-edge flex items-center gap-2">
           <span className="font-mono text-[10px] uppercase tracking-wider text-amber">NSE</span>
           <button
             type="button"
@@ -105,9 +105,8 @@ export default function TickerTape({ apiKey, watchlist }) {
                   {items.map((item, i) => (
                     <TickerItem key={`${copy}-${item.symbol}-${i}`} item={item} />
                   ))}
-                  <span className="inline-flex px-4 font-mono text-[11px] text-faint whitespace-nowrap items-baseline">
+                  <span className="inline-flex px-8 font-mono text-[11px] text-faint whitespace-nowrap items-baseline">
                     as of {snapshot?.data?.asOf || "n/a"} (delayed)
-                    <span className="text-edge select-none ml-4">|</span>
                   </span>
                 </span>
               ))}
