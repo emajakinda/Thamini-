@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0a101f;
+  --color-panel: #101a30;
+  --color-panel2: #0c1424;
+  --color-edge: #223153;
+  --color-fg: #e7ecf5;
+  --color-dim: #8fa0bd;
+  --color-faint: #5c6b8a;
+  --color-amber: #f0a420;
+  --color-amberdim: #3a2c0d;
+  --color-green: #2fd57b;
+  --color-red: #e36262;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: var(--color-amber);
+  color: var(--color-ink);
+}
+
+/* Respect reduced motion across the whole app */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.loading-dot {
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
