@@ -99,9 +99,9 @@ export default function TickerTape({ apiKey, watchlist }) {
 
         <div className="ticker-viewport flex-1 overflow-hidden" aria-label="NSE market ticker, delayed quotes">
           {items.length > 0 ? (
-            <div className="ticker-track inline-flex">
+            <div className="ticker-track flex w-max">
               {[0, 1].map((copy) => (
-                <span key={copy} aria-hidden={copy === 1}>
+                <span key={copy} className="inline-flex flex-nowrap shrink-0 items-baseline" aria-hidden={copy === 1}>
                   {items.map((item, i) => (
                     <TickerItem key={`${copy}-${item.symbol}-${i}`} item={item} />
                   ))}
